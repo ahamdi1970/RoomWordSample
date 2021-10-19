@@ -1,14 +1,12 @@
 <resources>
     <string name="app_name">Meetings</string>
     <string name="tab_meeting_title">My meetings</string>
-    <string name="tab_favorites_title">Favorites</string>
     <string name="activity_new_meeting">New meeting</string>
-    <string name="facebook_model">www.facebook.fr/</string>
-    <string name="about_me">À propos de moi</string>
     <string name="meeting_room">salle de Réunion</string>
     <string name="filtrer_par_salle">Filtrer par salle</string>
-    <string name="filtrer_par_heure">Filtrer par heure</string>
+    <string name="filtrer_par_date">Filtrer par date</string>
     <string name="reset">Reset</string>
+    <string name="date_de_reunion">date de réunion</string>
     <string-array name="rooms">
         <item>Mozart</item>
         <item>Beethoven</item>

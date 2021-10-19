@@ -27,6 +27,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import static com.openclassrooms.mareu.R.*;
+
 public class ListMeetingActivity extends AppCompatActivity {
 
     private ActivityListMeetingBinding binding;
@@ -91,8 +93,8 @@ public class ListMeetingActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId ()){
-            case R.id.sortbyhour:
-                Toast.makeText ( this,"heure",Toast.LENGTH_SHORT ).show ();
+            case R.id.sortbydate:
+                Toast.makeText ( this,"date",Toast.LENGTH_SHORT ).show ();
                 return true;
             case R.id.sortbyroom:
                 Toast.makeText ( this,"salle de réunion",Toast.LENGTH_SHORT ).show ();

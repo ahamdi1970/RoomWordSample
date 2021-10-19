@@ -14,36 +14,42 @@ public class Meeting {
     private long id;
 
     /**
-     * Full name
+     * Meeting name
      */
     private String meetingName;
 
     /**
-     * room
+     * Meeting date
+     */
+    private String date;
+
+    /**
+     * Meeting hour
      */
     private String hour;
 
     /**
-     * Phone number
+     * Meeting room
      */
     private String room;
 
     /**
-     * About me
+     * Meeting emails
      */
     private String emails;
 
     /**
      * Constructor
-     *
-     * @param id
-     * @param meetingName
+     * @param Meeting Name
      * @param
+     * @param id
+     * @param date
      */
-    public Meeting(long id, String meetingName, String hour,
+    public Meeting(long id, String meetingName, String date, String hour,
                    String room, String emails) {
         this.id = id;
         this.meetingName = meetingName;
+        this.date = date;
         this.hour = hour;
         this.room = room;
         this.emails = emails;
@@ -64,6 +70,10 @@ public class Meeting {
     public void setMeetingName(String meetingName) {
         this.meetingName = meetingName;
     }
+
+    public String getDate() { return date;  }
+
+    public void setDate(String date) { this.date = date; }
 
     public String getHour() {
         return hour;

@@ -1,5 +1,6 @@
 package com.openclassrooms.mareu.ui.meeting_list;
 
+import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.text.Editable;
@@ -8,22 +9,25 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
+import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
-import android.widget.Spinner;
+
 import com.openclassrooms.mareu.R;
 import com.openclassrooms.mareu.databinding.ActivityAddMeetingBinding;
 import com.openclassrooms.mareu.di.DI;
 import com.openclassrooms.mareu.model.Meeting;
 import com.openclassrooms.mareu.service.MeetingApiService;
 
+import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.Objects;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 
-public class AddMeetingActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, AdapterView.OnItemSelectedListener {
+public class AddMeetingActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, AdapterView.OnItemSelectedListener {
 
     private MeetingApiService mApiService;
 
@@ -41,6 +45,10 @@ public class AddMeetingActivity extends AppCompatActivity implements TimePickerD
 
         setMeeting();
 
+        binding.buttonDatePicker.setOnClickListener ( v -> {
+            DialogFragment datePicker = new DatePickerFragment ();
+            datePicker.show ( getSupportFragmentManager (),"date picker" );
+        } );
 
 
         binding.buttonHourPicker.setOnClickListener ( v -> {
@@ -48,6 +56,7 @@ public class AddMeetingActivity extends AppCompatActivity implements TimePickerD
             timePicker.show(getSupportFragmentManager (),"time picker");
         } );
 
+        //read spinner array
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
         R.array.rooms, android.R.layout.simple_spinner_item);
@@ -87,7 +96,7 @@ public class AddMeetingActivity extends AppCompatActivity implements TimePickerD
         Meeting meeting = new Meeting(
                 System.currentTimeMillis(),
                 binding.nomReunion.getText().toString(),
-                binding.etHourReunion.getText().toString(),
+                binding.etDateReunion.getText ().toString (), binding.etHourReunion.getText().toString(),
                 binding.etRoom.getText().toString(),
                 binding.etMailInvites.getText().toString()
         );
@@ -95,6 +104,15 @@ public class AddMeetingActivity extends AppCompatActivity implements TimePickerD
         finish();
     }
 
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, year);
+        c.set(Calendar.MONTH, month);
+        c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
+        binding.etDateReunion.setText ( currentDateString );
+    }
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
@@ -114,6 +132,7 @@ public class AddMeetingActivity extends AppCompatActivity implements TimePickerD
     }
 
 
+// to be able to use spinner
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String text = parent.getItemAtPosition ( position ).toString ();
