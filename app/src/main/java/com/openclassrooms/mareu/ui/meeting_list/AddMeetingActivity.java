@@ -45,11 +45,14 @@ public class AddMeetingActivity extends AppCompatActivity implements DatePickerD
 
         setMeeting();
 
+        //read date selected
+
         binding.buttonDatePicker.setOnClickListener ( v -> {
             DialogFragment datePicker = new DatePickerFragment ();
             datePicker.show ( getSupportFragmentManager (),"date picker" );
         } );
 
+        //read hour selected
 
         binding.buttonHourPicker.setOnClickListener ( v -> {
             DialogFragment timePicker = new TimePickerFragment ();
@@ -64,6 +67,7 @@ public class AddMeetingActivity extends AppCompatActivity implements DatePickerD
         binding.spinner1.setAdapter(adapter);
         binding.spinner1.setOnItemSelectedListener( this );
 
+        //save the new meeting
 
         binding.createButton.setOnClickListener(v -> addMeeting());
     }
@@ -110,8 +114,6 @@ public class AddMeetingActivity extends AppCompatActivity implements DatePickerD
         c.set(Calendar.YEAR, year);
         c.set(Calendar.MONTH, month);
         c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-
         String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
         binding.etDateReunion.setText ( currentDateString );
     }

@@ -33,4 +33,12 @@ public interface MeetingApiService {
      */
 
     List<Meeting> returnMatchingMeetingsWithDate(String dateToFilter);
+
+    /**
+     * filter by room a meeting
+     * @param roomSelected
+     */
+
+
+    List<Meeting> returnMatchingMeetingsWithRoom(String roomSelected);
 }

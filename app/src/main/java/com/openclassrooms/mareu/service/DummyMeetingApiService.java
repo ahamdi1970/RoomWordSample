@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import static android.widget.Toast.makeText;
+
 /**
  * Dummy mock for the Api
  */
@@ -53,6 +55,13 @@ public class DummyMeetingApiService implements MeetingApiService {
         return meetingsMatchingDate;
     }
 
-
-
+    @Override
+    public List<Meeting> returnMatchingMeetingsWithRoom(String roomSelected){
+        List<Meeting> meetingsMatchingRoom = new ArrayList<> ();
+        for(int i = 0 ; i<meetings.size(); i++ ){
+            if (meetings.get(i).getDate().equals(roomSelected))
+                meetingsMatchingRoom.add(meetings.get(i));
+        }
+        return meetingsMatchingRoom;
+    }
 }

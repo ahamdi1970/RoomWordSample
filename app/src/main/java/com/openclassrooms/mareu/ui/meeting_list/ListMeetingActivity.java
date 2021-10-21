@@ -8,6 +8,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
@@ -23,7 +25,6 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.text.DateFormat;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
@@ -33,18 +34,14 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import static com.openclassrooms.mareu.R.*;
 
-public class ListMeetingActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class ListMeetingActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, AdapterView.OnItemSelectedListener {
 
     private ActivityListMeetingBinding binding;
 
     private MeetingApiService apiService;
 
     private MyMeetingRecyclerViewAdapter adapter;
-
-    Menu menu;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,14 +56,10 @@ public class ListMeetingActivity extends AppCompatActivity implements DatePicker
 
         initList();
 
-
-        binding.addMeeting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), AddMeetingActivity.class);
-                startActivity(intent);
-            }
-        });
+        binding.addMeeting.setOnClickListener( v -> {
+            Intent intent = new Intent(getApplicationContext(), AddMeetingActivity.class);
+            startActivity(intent);
+        } );
     }
 
 
@@ -99,13 +92,21 @@ public class ListMeetingActivity extends AppCompatActivity implements DatePicker
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
+
         switch (item.getItemId ()){
             case R.id.sortbydate:
                 DialogFragment datePicker = new DatePickerFragment ();
                 datePicker.show ( getSupportFragmentManager (),"date picker" );
                 return true;
             case R.id.sortbyroom:
-                Toast.makeText ( this,"salle de réunion",Toast.LENGTH_SHORT ).show ();
+                switch (item.getItemId ()){
+                    case R.id.item_mozart:
+                        apiService.returnMatchingMeetingsWithRoom ("Mozart");
+                        return true;
+                    case R.id.item_beethoven:
+                        apiService.returnMatchingMeetingsWithRoom ("Beethoven");
+                        return true;
+                }
                 return true;
             case R.id.reset:
                 Toast.makeText ( this,"Reset",Toast.LENGTH_SHORT ).show ();
@@ -142,6 +143,7 @@ public class ListMeetingActivity extends AppCompatActivity implements DatePicker
         apiService.deleteMeeting(event.meeting);
         adapter.notifyDataSetChanged();
     }
+    // to be able to use date selected
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -155,4 +157,21 @@ public class ListMeetingActivity extends AppCompatActivity implements DatePicker
         binding.listMeetings.setAdapter(adapter);
         adapter.notifyDataSetChanged ();
     }
+
+    // to be able to use spinner on the room selected
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String text = parent.getSelectedItem ().toString ();
+        List<Meeting> meetingListUpdated = apiService.returnMatchingMeetingsWithRoom ( text );
+        adapter = new MyMeetingRecyclerViewAdapter ( meetingListUpdated );
+        binding.listMeetings.setAdapter(adapter);
+        adapter.notifyDataSetChanged ();
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
 }
