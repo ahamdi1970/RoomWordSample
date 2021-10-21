@@ -1,10 +1,13 @@
 package com.openclassrooms.mareu.service;
 
-import android.app.DatePickerDialog;
+import android.widget.DatePicker;
+import android.widget.Toast;
 
 import com.openclassrooms.mareu.model.Meeting;
-import com.openclassrooms.mareu.ui.meeting_list.DatePickerFragment;
 
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -13,8 +16,6 @@ import java.util.List;
 public class DummyMeetingApiService implements MeetingApiService {
 
     private final List<Meeting> meetings = DummyMeetingGenerator.generateMeetings();
-
-
 
     /**
      * {@inheritDoc}
@@ -42,12 +43,16 @@ public class DummyMeetingApiService implements MeetingApiService {
         meetings.add(meeting);
     }
 
-    //@Override
-    //public dateSelect(DatePickerFragment dateSelected){
-     //   List<?> filteredList;
-      //  for (date)
-         //   return filteredList;
+    @Override
+    public List<Meeting> returnMatchingMeetingsWithDate(String dateToFilter){
+        List<Meeting> meetingsMatchingDate = new ArrayList<> ();
+        for(int i = 0 ; i<meetings.size(); i++ ){
+            if (meetings.get(i).getDate().equals(dateToFilter))
+                meetingsMatchingDate.add(meetings.get(i));
+        }
+        return meetingsMatchingDate;
+    }
 
-  //  }
+
 
 }

@@ -110,6 +110,8 @@ public class AddMeetingActivity extends AppCompatActivity implements DatePickerD
         c.set(Calendar.YEAR, year);
         c.set(Calendar.MONTH, month);
         c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+
         String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
         binding.etDateReunion.setText ( currentDateString );
     }

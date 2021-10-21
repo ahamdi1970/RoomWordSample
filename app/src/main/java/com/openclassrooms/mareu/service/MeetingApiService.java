@@ -26,4 +26,11 @@ public interface MeetingApiService {
      * @param meeting
      */
     void createMeeting(Meeting meeting);
+
+    /**
+     * filter by date a meeting
+     * @param dateToFilter
+     */
+
+    List<Meeting> returnMatchingMeetingsWithDate(String dateToFilter);
 }
