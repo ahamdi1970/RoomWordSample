@@ -7,6 +7,12 @@
     <string name="filtrer_par_date">Filtrer par date</string>
     <string name="reset">Reset</string>
     <string name="date_de_reunion">date de réunion</string>
+    <string name="date_meeting">%1$s-%2$s-%3$s</string>
+    <string name="mozart">Mozart</string>
+    <string name="beethoven">Beethoven</string>
+    <string name="vivaldi">Vivaldi</string>
+    <string name="bach">Bach</string>
+    <string name="chopin">Chopin</string>
     <string-array name="rooms">
         <item>Mozart</item>
         <item>Beethoven</item>

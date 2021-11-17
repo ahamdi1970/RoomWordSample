@@ -1,13 +1,8 @@
 package com.openclassrooms.mareu.service;
 
-import android.widget.DatePicker;
-import android.widget.Toast;
-
 import com.openclassrooms.mareu.model.Meeting;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import static android.widget.Toast.makeText;
@@ -17,7 +12,7 @@ import static android.widget.Toast.makeText;
  */
 public class DummyMeetingApiService implements MeetingApiService {
 
-    private final List<Meeting> meetings = DummyMeetingGenerator.generateMeetings();
+    private final List<Meeting> meetings = DummyMeetingGenerator.readDBMeetings ();
 
     /**
      * {@inheritDoc}
@@ -59,7 +54,7 @@ public class DummyMeetingApiService implements MeetingApiService {
     public List<Meeting> returnMatchingMeetingsWithRoom(String roomSelected){
         List<Meeting> meetingsMatchingRoom = new ArrayList<> ();
         for(int i = 0 ; i<meetings.size(); i++ ){
-            if (meetings.get(i).getDate().equals(roomSelected))
+            if (meetings.get(i).getRoom ().equals(roomSelected))
                 meetingsMatchingRoom.add(meetings.get(i));
         }
         return meetingsMatchingRoom;

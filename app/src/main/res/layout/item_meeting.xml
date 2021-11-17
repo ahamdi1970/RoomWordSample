@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -12,22 +13,22 @@
         android:layout_marginBottom="10dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/presence_online" />
 
     <TextView
         android:id="@+id/item_list_reunion"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
+        android:layout_marginTop="10dp"
         android:textStyle="bold"
-        android:textSize="20sp"
-        android:hint="ma Réunion - Heure - salle"
+        android:textSize="17sp"
+        tools:text="ma Réunion - Heure - salle"
         app:layout_constraintBottom_toBottomOf="@+id/reunionColor"
         app:layout_constraintStart_toEndOf="@+id/reunionColor"
-        app:layout_constraintTop_toTopOf="@+id/reunionColor" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/item_list_mail"
@@ -35,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:textStyle="normal"
-        android:hint="emails"
+        tools:text="emails"
         app:layout_constraintTop_toBottomOf="@+id/item_list_reunion"
         app:layout_constraintStart_toEndOf="@+id/reunionColor"
         />
@@ -49,7 +50,7 @@
         android:background="@null"
         app:layout_constraintBottom_toBottomOf="@+id/item_list_reunion"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/item_list_reunion"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_delete_white_24dp" />
 
 

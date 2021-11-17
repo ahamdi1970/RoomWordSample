@@ -1,5 +1,6 @@
 package com.openclassrooms.mareu.ui.meeting_list;
 
+import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,7 @@ public class MyMeetingRecyclerViewAdapter extends RecyclerView.Adapter<MyMeeting
         Meeting meeting = mMeetings.get(position);
         holder.binding.itemListReunion.setText( String.format ( "%s - %s - %s", meeting.getMeetingName (), meeting.getHour (), meeting.getRoom () ) );
         holder.binding.itemListMail.setText ( meeting.getEmails () );
-
+        holder.binding.reunionColor.setColorFilter ( meeting.getColor (), PorterDuff.Mode.SRC_ATOP );
         holder.binding.itemListDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

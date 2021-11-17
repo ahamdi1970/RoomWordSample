@@ -2,9 +2,11 @@ package com.openclassrooms.mareu.ui.meeting_list;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,7 +14,9 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
+import com.openclassrooms.mareu.DAO.DataBaseHelper;
 import com.openclassrooms.mareu.R;
 import com.openclassrooms.mareu.databinding.ActivityAddMeetingBinding;
 import com.openclassrooms.mareu.di.DI;
@@ -22,6 +26,7 @@ import com.openclassrooms.mareu.service.MeetingApiService;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Objects;
+import java.util.Random;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
@@ -33,6 +38,7 @@ public class AddMeetingActivity extends AppCompatActivity implements DatePickerD
 
     private ActivityAddMeetingBinding binding;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,39 +49,47 @@ public class AddMeetingActivity extends AppCompatActivity implements DatePickerD
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
+        initSpinnerRoom();
+
+        initListener();
+
         setMeeting();
 
-        //read date selected
-
-        binding.buttonDatePicker.setOnClickListener ( v -> {
-            DialogFragment datePicker = new DatePickerFragment ();
-            datePicker.show ( getSupportFragmentManager (),"date picker" );
-        } );
-
-        //read hour selected
-
-        binding.buttonHourPicker.setOnClickListener ( v -> {
-            DialogFragment timePicker = new TimePickerFragment ();
-            timePicker.show(getSupportFragmentManager (),"time picker");
-        } );
-
-        //read spinner array
-
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-        R.array.rooms, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        binding.spinner1.setAdapter(adapter);
-        binding.spinner1.setOnItemSelectedListener( this );
-
-        //save the new meeting
-
-        binding.createButton.setOnClickListener(v -> addMeeting());
     }
 
     private void initView() {
         binding = ActivityAddMeetingBinding.inflate(this.getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+    }
+
+    private int getRandomColor(){
+        Random random = new Random ();
+        return Color.argb (255,random.nextInt (256),random.nextInt (256),random.nextInt (256));
+    }
+
+    private void initSpinnerRoom(){
+        //read spinner array
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+        R.array.rooms, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        binding.spinner1.setAdapter(adapter);
+        binding.spinner1.setOnItemSelectedListener( this );
+    }
+
+    private void initListener(){
+        //read date selected
+        binding.buttonDatePicker.setOnClickListener ( v -> {
+            DialogFragment datePicker = new DatePickerFragment ();
+            datePicker.show ( getSupportFragmentManager (),"date picker" );
+        } );
+        //read hour selected
+        binding.buttonHourPicker.setOnClickListener ( v -> {
+            DialogFragment timePicker = new TimePickerFragment ();
+            timePicker.show(getSupportFragmentManager (),"time picker");
+        } );
+        //save the new meeting
+        binding.createButton.setOnClickListener(v -> addMeeting());
     }
 
     private void setMeeting() {
@@ -102,19 +116,21 @@ public class AddMeetingActivity extends AppCompatActivity implements DatePickerD
                 binding.nomReunion.getText().toString(),
                 binding.etDateReunion.getText ().toString (), binding.etHourReunion.getText().toString(),
                 binding.etRoom.getText().toString(),
-                binding.etMailInvites.getText().toString()
+                binding.etMailInvites.getText().toString(),getRandomColor ()
         );
         mApiService.createMeeting(meeting);
+        DataBaseHelper dataBaseHelper = new DataBaseHelper ( AddMeetingActivity.this );
+        boolean success = dataBaseHelper.addOne ( meeting );
+        Toast.makeText ( AddMeetingActivity.this, "SUCCESS = " + success, Toast.LENGTH_SHORT ).show ();
         finish();
     }
 
     @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.YEAR, year);
-        c.set(Calendar.MONTH, month);
-        c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
+    public void onDateSet(DatePicker view, int year , int month ,int dayOfMonth ) {
+        String dayOfMonthStr = String.valueOf (dayOfMonth);
+        String monthStr = String.valueOf (month + 1);
+        String yearStr = String.valueOf (year);
+        String currentDateString = getString (R.string.date_meeting,dayOfMonthStr,monthStr,yearStr);
         binding.etDateReunion.setText ( currentDateString );
     }
 
@@ -147,4 +163,14 @@ public class AddMeetingActivity extends AppCompatActivity implements DatePickerD
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
+
+
+
+
+
+
+
+
+
 }

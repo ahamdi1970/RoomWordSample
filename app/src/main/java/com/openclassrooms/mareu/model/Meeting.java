@@ -39,20 +39,33 @@ public class Meeting {
     private String emails;
 
     /**
-     * Constructor
-     * @param Meeting Name
-     * @param
-     * @param id
-     * @param date
+     * Color
      */
+    private int color;
+
+
+    /**
+     * Constructor
+     *
+     * @param id            long
+     * @param meetingName   String
+     * @param date          String
+     * @param hour          String
+     * @param room          String
+     * @param emails        String
+     * @param color      int
+     *
+     */
+
     public Meeting(long id, String meetingName, String date, String hour,
-                   String room, String emails) {
+                   String room, String emails, int color) {
         this.id = id;
         this.meetingName = meetingName;
         this.date = date;
         this.hour = hour;
         this.room = room;
         this.emails = emails;
+        this.color = color;
     }
 
     public long getId() {
@@ -98,6 +111,10 @@ public class Meeting {
     public void setEmails(String emails) {
         this.emails = emails;
     }
+
+    public int getColor() { return color; }
+
+    public void setColor(int color) { this.color = color; }
 
     @Override
     public boolean equals(Object o) {

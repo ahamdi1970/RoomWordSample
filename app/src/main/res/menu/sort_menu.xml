@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.meeting_list.ListMeetingActivity"
+   >
 
-    <item
+   <item
         android:id="@+id/sortbydate"
         android:title="@string/filtrer_par_date"
         app:showAsAction="never"/>
@@ -14,11 +17,24 @@
 
             <item
             android:id="@+id/item_mozart"
-            android:title="Mozart" />
+            android:title="@string/mozart" />
 
             <item
             android:id="@+id/item_beethoven"
-            android:title="Beethoven" />
+            android:title="@string/beethoven" />
+
+            <item
+                android:id="@+id/item_vivaldi"
+                android:title="@string/vivaldi" />
+
+            <item
+                android:id="@+id/item_bach"
+                android:title="@string/bach" />
+
+            <item
+                android:id="@+id/item_chopin"
+                android:title="@string/chopin" />
+
 
         </menu>
     </item>
